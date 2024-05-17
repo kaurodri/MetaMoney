@@ -1,0 +1,56 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MetaMoney</title>
+    <link rel="sortcut icon" href="banco-imagens/favicon-32x32.png" type="image/x-icon" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/main.css" rel="stylesheet">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+    <div class="center">
+        <div class="box1">
+
+            <div class="inpu">
+                <input type="text" id="itemInput">
+                <button onclick="addItem()">Adicionar item</button>
+            </div>
+            <div class="boxtext">
+                <ul id="itemList"></ul>
+            </div>
+
+
+            <script>
+                function addItem() {
+                    var input = document.getElementById('itemInput');
+                    var item = document.createElement('li');
+                    item.appendChild(document.createTextNode(input.value));
+                    item.classList.add('item');
+                    item.onclick = function () {
+                        this.classList.toggle('checked');
+
+                    }
+                    document.getElementById('itemList').appendChild(item);
+                    input.value = '';
+                }
+            </script>
+        </div>
+
+        <div class="box2">
+
+            <div>
+                <input type="number" id="valor1" value="100">
+            </div>
+
+            <div class="boxmeta">
+                <ul id="boxmeta1"></ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>

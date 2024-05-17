@@ -1,0 +1,61 @@
+html,
+body {
+    /* resetando o body */
+    width: 100%;
+    max-width: 100vw;
+    /* 100 view width */
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    cursor: pointer;
+}
+
+.checked {
+    color: red;
+    text-decoration: line-through;
+}
+
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box1 {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.inpu {
+    width: 170px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.boxtext {
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+}
+
+.box2 {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 15px;
+}
+
+.boxmeta {
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}

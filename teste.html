@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .item {
+            cursor: pointer;
+        }
+        .checked {
+            color: red;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="itemInput">
+    <button onclick="addItem()">Adicionar item</button>
+    <ul id="itemList"></ul>
+
+    <script>
+        function addItem() {
+            var input = document.getElementById('itemInput');
+            var item = document.createElement('li');
+            item.appendChild(document.createTextNode(input.value));
+            item.classList.add('item');
+            item.onclick = function() {
+                this.classList.toggle('checked');
+            }
+            document.getElementById('itemList').appendChild(item);
+            input.value = '';
+        }
+    </script>
+</body>
+</html>

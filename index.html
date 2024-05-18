@@ -15,42 +15,80 @@
         <div class="box1">
 
             <div class="inpu">
-                <input type="text" id="itemInput">
+                <input type="text" id="item" name="item"><br>
                 <button onclick="addItem()">Adicionar item</button>
             </div>
             <div class="boxtext">
                 <ul id="itemList"></ul>
             </div>
 
-
-            <script>
-                function addItem() {
-                    var input = document.getElementById('itemInput');
-                    var item = document.createElement('li');
-                    item.appendChild(document.createTextNode(input.value));
-                    item.classList.add('item');
-                    item.onclick = function () {
-                        this.classList.toggle('checked');
-
-                    }
-                    document.getElementById('itemList').appendChild(item);
-                    input.value = '';
-                }
-            </script>
         </div>
 
         <div class="box2">
 
             <div>
-                <input type="number" id="valor1" value="100">
+                <input type="number" id="entrada" name="entrada" value="200" onchange="updateComparacao()"><br>
             </div>
 
             <div class="boxmeta">
-                <ul id="boxmeta1"></ul>
+                <ul id="comparacao"></ul>
+            </div>
+
+            <div class="boxmeta">
+                <ul id="carrinho"></ul>
             </div>
 
         </div>
+
+        <script>
+            var items = [];
+            function addItem() {
+                var itemInput = document.getElementById('item').value.split(':');
+                var itemName = itemInput[0].trim();
+                var itemValue = parseFloat(itemInput[1]);
+                items.push({ name: itemName, value: itemValue });
+                var li = document.createElement('li');
+                li.appendChild(document.createTextNode(itemName + ' : ' + itemValue));
+                li.addEventListener('click', function () {
+                    var index = items.findIndex(function (item) {
+                        return item.name === itemName && item.value === itemValue;
+                    });
+                    items.splice(index, 1);
+                    this.parentNode.removeChild(this);
+                    updateComparacao();
+                });
+                document.getElementById('itemList').appendChild(li);
+                updateComparacao();
+            }
+            function updateComparacao() {
+                var entrada = parseFloat(document.getElementById('entrada').value);
+                document.getElementById('comparacao').innerHTML = '';
+                items.forEach(function (item) {
+                    var li = document.createElement('li');
+                    li.appendChild(document.createTextNode(item.name + ' x ' + Math.floor(entrada / item.value)));
+                    li.addEventListener('click', function () {
+                        if (entrada - item.value >= 0) {
+                            entrada -= item.value;
+                            var liCarrinho = document.createElement('li');
+                            liCarrinho.appendChild(document.createTextNode(item.name + ' : ' + item.value));
+                            liCarrinho.addEventListener('click', function () {
+                                entrada += item.value;
+                                document.getElementById('entrada').value = entrada;
+                                this.parentNode.removeChild(this);
+                                updateComparacao();
+                            });
+                            document.getElementById('carrinho').appendChild(liCarrinho);
+                            document.getElementById('entrada').value = entrada;
+                            updateComparacao();
+                        }
+                    });
+                    document.getElementById('comparacao').appendChild(li);
+                });
+                var totalValue = items.reduce(function (total, item) {
+                    return total + item.value;
+                }, 0);
+                document.getElementById('diferenca').innerHTML = 'Diferença: ' + (entrada - totalValue);
+            }
+        </script>
     </div>
-
-
 </body>

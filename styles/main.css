@@ -7,6 +7,12 @@ body {
     height: 100%;
     padding: 0;
     margin: 0;
+
+    background: #0d1117;
+
+    font-family: "Roboto Mono", monospace;
+    color: #f2e595;
+    font-size: 12px;
 }
 
 .item {
@@ -31,31 +37,34 @@ body {
 }
 
 .box1 {
-    border: 1px solid #ccc;
     padding: 10px;
+
+    background: #161b22;;
 }
 
 .inpu {
     width: 170px;
-    border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 15px;
 }
 
 .boxtext {
-    border: 1px solid #ccc;
     padding: 10px;
     display: flex;
+
+    background: #010409;
 }
 
 .box2 {
-    border: 1px solid #ccc;
     padding: 10px;
     margin-left: 15px;
+
+    background: #161b22;;
 }
 
 .boxmeta {
     margin-top: 15px;
-    border: 1px solid #ccc;
     padding: 10px;
+
+    background: #010409;
 }

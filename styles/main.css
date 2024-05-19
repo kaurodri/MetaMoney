@@ -34,6 +34,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* width: 360px; */
 }
 
 .box1 {
@@ -67,4 +69,16 @@ body {
     padding: 10px;
 
     background: #010409;
+}
+
+@media screen and (max-width: 1020px) {
+    
+    .center {
+        flex-direction: column;
+    }
+
+    .box2 {
+        margin-left: 0;
+        margin-top: 10px;
+    }
 }

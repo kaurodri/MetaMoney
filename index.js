@@ -84,28 +84,28 @@ function Reservar() {
     //Limpar Carrinho
     document.getElementById('carrinho').innerHTML = '';
 
-    itemLista.forEach(function (item) {
-        for (item.nome in carrinho) {
+    for (var itemNome in carrinho) {
+        //Criar Elemento
+        let texto = itemNome + ' : ' + itemLista.find(function(item) { return item.nome === itemNome; }).valor + ' x ' + carrinho[itemNome];
+        let li = criarElementoli('carrinho', texto);
 
-            //Criar Elemento
-            let texto = item.nome + ' : ' + item.valor + ' x ' + carrinho[item.nome];
-            let li = criarElementoli('carrinho', texto);
+        //Remover do Carrinho
+        li.addEventListener('click', function () {
 
-            //Remover do Carrinho
-            li.addEventListener('click', function () {
+            var itemNome = this.textContent.split(':')[0].trim();
+            var itemValor = itemLista.find(function(item) { return item.nome === itemNome; }).valor;
 
-                let entrada = parseFloat(document.getElementById('entrada').value);
-                entrada += item.valor;
-                document.getElementById('entrada').value = entrada;
-                
-                carrinho[item.nome]--;
-                if (carrinho[item.nome] === 0) {
-                    delete carrinho[item.nome];
-                }
+            let entrada = parseFloat(document.getElementById('entrada').value);
+            entrada += itemValor;
+            document.getElementById('entrada').value = entrada;
 
-                Reservar();
-                Simular();
-            });
-        }
-    })
+            carrinho[itemNome]--;
+            if (carrinho[itemNome] === 0) {
+                delete carrinho[itemNome];
+            }
+
+            Reservar();
+            Simular();
+        });
+    }
 }

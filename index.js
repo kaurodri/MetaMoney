@@ -1,26 +1,44 @@
-var items = [];
-var carrinho = {};
+const itemLista = [];
+const carrinho = {};
 
-function addItem() {
-    var itemInput = document.getElementById('item').value.split(':');
-    var itemName = itemInput[0].trim();
-    var itemValue = parseFloat(itemInput[1]);
-    items.push({name: itemName, value: itemValue});
-    var li = document.createElement('li');
-    li.appendChild(document.createTextNode(itemName + ' : ' + itemValue));
+function Lista() {
+
+    //Adicionar Item
+    let itemArray = document.getElementById('item').value.split(':');
+    var itemNome = itemArray[0].trim();
+    var itemValor = parseFloat(itemArray[1]);
+    itemLista.push({nome: itemNome, valor: itemValor});
+
+    //Criar Elemento
+    let texto = document.createTextNode(itemNome + ' : ' + itemValor);
+    let li = document.createElement('li');
+    let div = document.getElementById('itemList');
+    li.appendChild(texto);
+    div.appendChild(li);
+    
+    //Atualizar Comparação
+    Simular();
+
+    //Remover Item
     li.addEventListener('click', function() {
-        var index = items.findIndex(function(item) {
-            return item.name === itemName && item.value === itemValue;
+
+        //Procurar Item
+        let index = itemLista.findIndex(function(item) {
+            return item.name === nomeItem && item.value === itemValue;
         });
-        items.splice(index, 1);
+
+        //Remover Texto
+        itemLista.splice(index, 1);
+
+        //Remover Elemento
         this.parentNode.removeChild(this);
-        updateComparacao();
+
+        //Atualizar Comparação
+        Simular();
     });
-    document.getElementById('itemList').appendChild(li);
-    updateComparacao();
 }
 
-function updateComparacao() {
+function Simular() {
     var entrada = parseFloat(document.getElementById('entrada').value);
     document.getElementById('comparacao').innerHTML = '';
     items.forEach(function(item) {
@@ -31,15 +49,15 @@ function updateComparacao() {
                 entrada -= item.value;
                 carrinho[item.name] = (carrinho[item.name] || 0) + 1;
                 document.getElementById('entrada').value = entrada;
-                updateCarrinho();
-                updateComparacao();
+                Reservar();
+                Simular();
             }
         });
         document.getElementById('comparacao').appendChild(li);
     });
 }
 
-function updateCarrinho() {
+function Reservar() {
     document.getElementById('carrinho').innerHTML = '';
     for (var itemName in carrinho) {
         var li = document.createElement('li');
@@ -53,8 +71,8 @@ function updateCarrinho() {
             if (carrinho[itemName] === 0) {
                 delete carrinho[itemName];
             }
-            updateCarrinho();
-            updateComparacao();
+            Reservar();
+            Simular();
         });
         document.getElementById('carrinho').appendChild(li);
     }

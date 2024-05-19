@@ -1,6 +1,16 @@
 const itemLista = [];
 const carrinho = {};
 
+function criarElementoli(id, texto) {
+
+    let textnode = document.createTextNode(texto);
+    let li = document.createElement('li');
+    let div = document.getElementById(id);
+    li.appendChild(textnode);
+    div.appendChild(li);
+
+}
+
 function Lista() {
 
     //Adicionar Item
@@ -10,11 +20,8 @@ function Lista() {
     itemLista.push({ nome: itemNome, valor: itemValor });
 
     //Criar Elemento
-    let texto = document.createTextNode(itemNome + ' : ' + itemValor);
-    let li = document.createElement('li');
-    let div = document.getElementById('itemList');
-    li.appendChild(texto);
-    div.appendChild(li);
+    let texto = itemNome + ' : ' + itemValor;
+    criarElementoli('itemList', texto);
 
     //Atualizar Comparação
     Simular();
@@ -47,11 +54,8 @@ function Simular() {
 
         //Criar Elemento
         let entrada = parseFloat(document.getElementById('entrada').value);
-        let texto = document.createTextNode(item.nome + ' x ' + Math.floor(entrada / item.valor));
-        let li = document.createElement('li');
-        let div = document.getElementById('comparacao');
-        li.appendChild(texto);
-        div.appendChild(li);
+        let texto = item.nome + ' x ' + Math.floor(entrada / item.valor);
+        criarElementoli('comparacao', texto);
 
         //Reservar
         li.addEventListener('click', function () {
@@ -83,11 +87,8 @@ function Reservar() {
         for (item.nome in carrinho) {
 
             //Criar Elemento
-            let texto = document.createTextNode(item.nome + ' : ' + item.valor + ' x ' + carrinho[item.nome]);
-            let li = document.createElement('li');
-            let div = document.getElementById('carrinho');
-            li.appendChild(texto);
-            div.appendChild(li);
+            let texto = item.nome + ' : ' + item.valor + ' x ' + carrinho[item.nome];
+            criarElementoli('carrinho', texto);
 
             //Remover do Carrinho
             li.addEventListener('click', function () {
@@ -100,6 +101,7 @@ function Reservar() {
                 if (carrinho[item.nome] === 0) {
                     delete carrinho[item.nome];
                 }
+                
                 Reservar();
                 Simular();
             });

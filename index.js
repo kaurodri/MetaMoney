@@ -8,6 +8,7 @@ function criarElementoli(id, texto) {
     let div = document.getElementById(id);
     li.appendChild(textnode);
     div.appendChild(li);
+    return li;
 
 }
 
@@ -21,7 +22,7 @@ function Lista() {
 
     //Criar Elemento
     let texto = itemNome + ' : ' + itemValor;
-    criarElementoli('itemList', texto);
+    let li = criarElementoli('itemList', texto);
 
     //Atualizar Comparação
     Simular();
@@ -55,7 +56,7 @@ function Simular() {
         //Criar Elemento
         let entrada = parseFloat(document.getElementById('entrada').value);
         let texto = item.nome + ' x ' + Math.floor(entrada / item.valor);
-        criarElementoli('comparacao', texto);
+        let li = criarElementoli('comparacao', texto);
 
         //Reservar
         li.addEventListener('click', function () {
@@ -88,7 +89,7 @@ function Reservar() {
 
             //Criar Elemento
             let texto = item.nome + ' : ' + item.valor + ' x ' + carrinho[item.nome];
-            criarElementoli('carrinho', texto);
+            let li = criarElementoli('carrinho', texto);
 
             //Remover do Carrinho
             li.addEventListener('click', function () {
@@ -101,7 +102,7 @@ function Reservar() {
                 if (carrinho[item.nome] === 0) {
                     delete carrinho[item.nome];
                 }
-                
+
                 Reservar();
                 Simular();
             });

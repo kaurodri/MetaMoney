@@ -5,9 +5,9 @@ function Lista() {
 
     //Adicionar Item
     let itemArray = document.getElementById('item').value.split(':');
-    var itemNome = itemArray[0].trim();
-    var itemValor = parseFloat(itemArray[1]);
-    itemLista.push({nome: itemNome, valor: itemValor});
+    let itemNome = itemArray[0].trim();
+    let itemValor = parseFloat(itemArray[1]);
+    itemLista.push({ nome: itemNome, valor: itemValor });
 
     //Criar Elemento
     let texto = document.createTextNode(itemNome + ' : ' + itemValor);
@@ -15,16 +15,16 @@ function Lista() {
     let div = document.getElementById('itemList');
     li.appendChild(texto);
     div.appendChild(li);
-    
+
     //Atualizar Comparação
     Simular();
 
     //Remover Item
-    li.addEventListener('click', function() {
+    li.addEventListener('click', function () {
 
         //Procurar Item
-        let index = itemLista.findIndex(function(item) {
-            return item.name === nomeItem && item.value === itemValue;
+        let index = itemLista.findIndex(function (item) {
+            return item.nome === itemNome && item.valor === itemValor;
         });
 
         //Remover Texto
@@ -39,41 +39,70 @@ function Lista() {
 }
 
 function Simular() {
-    var entrada = parseFloat(document.getElementById('entrada').value);
+
+    //Limpar Comparação
     document.getElementById('comparacao').innerHTML = '';
-    items.forEach(function(item) {
-        var li = document.createElement('li');
-        li.appendChild(document.createTextNode(item.name + ' x ' + Math.floor(entrada / item.value)));
-        li.addEventListener('click', function() {
-            if (entrada - item.value >= 0) {
-                entrada -= item.value;
-                carrinho[item.name] = (carrinho[item.name] || 0) + 1;
+
+    itemLista.forEach(function (item) {
+
+        //Criar Elemento
+        let entrada = parseFloat(document.getElementById('entrada').value);
+        let texto = document.createTextNode(item.nome + ' x ' + Math.floor(entrada / item.valor));
+        let li = document.createElement('li');
+        let div = document.getElementById('comparacao');
+        li.appendChild(texto);
+        div.appendChild(li);
+
+        //Reservar
+        li.addEventListener('click', function () {
+            if (entrada - item.valor >= 0) {
+
+                //subtrair valor
+                entrada -= item.valor;
+
+                //adicionar item ao carrinho
+                carrinho[item.nome] = (carrinho[item.nome] || 0) + 1;
+
+                //atualizar entrada
                 document.getElementById('entrada').value = entrada;
+
+                //Atualizar Comparação e Carrinho
+                Simular()
                 Reservar();
-                Simular();
             }
         });
-        document.getElementById('comparacao').appendChild(li);
+
     });
 }
 
 function Reservar() {
+    //Limpar Carrinho
     document.getElementById('carrinho').innerHTML = '';
-    for (var itemName in carrinho) {
-        var li = document.createElement('li');
-        li.appendChild(document.createTextNode(itemName + ' : ' + items.find(function(item) { return item.name === itemName; }).value + ' x ' + carrinho[itemName]));
-        li.addEventListener('click', function() {
-            var itemName = this.textContent.split(':')[0].trim();
-            var itemValue = items.find(function(item) { return item.name === itemName; }).value;
-            entrada += itemValue;
-            document.getElementById('entrada').value = entrada;
-            carrinho[itemName]--;
-            if (carrinho[itemName] === 0) {
-                delete carrinho[itemName];
-            }
-            Reservar();
-            Simular();
-        });
-        document.getElementById('carrinho').appendChild(li);
-    }
+
+    itemLista.forEach(function (item) {
+        for (item.nome in carrinho) {
+
+            //Criar Elemento
+            let texto = document.createTextNode(item.nome + ' : ' + item.valor + ' x ' + carrinho[item.nome]);
+            let li = document.createElement('li');
+            let div = document.getElementById('carrinho');
+            li.appendChild(texto);
+            div.appendChild(li);
+
+            //Remover do Carrinho
+            li.addEventListener('click', function () {
+
+                let entrada = parseFloat(document.getElementById('entrada').value);
+                entrada += item.valor;
+                document.getElementById('entrada').value = entrada;
+                
+                carrinho[item.nome]--;
+                if (carrinho[item.nome] === 0) {
+                    delete carrinho[item.nome];
+                }
+                Reservar();
+                Simular();
+            });
+        }
+    })
 }
